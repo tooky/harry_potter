@@ -11,6 +11,8 @@ class Checkout
                  5
                when 3
                  10
+               when 4
+                 20
                else
                  0
                end
