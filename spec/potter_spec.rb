@@ -87,4 +87,12 @@ describe "pricing sets of harry potter books" do
 
     expect( checkout.total ).to eq 40 * 0.75
   end
+
+  it "does not discount books outside of the set" do
+    checkout.scan book1
+    checkout.scan book1
+    checkout.scan book2
+
+    expect( checkout.total ).to eq 8 + 16 * 0.95
+  end
 end
