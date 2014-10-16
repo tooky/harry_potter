@@ -28,6 +28,7 @@ end
 describe "pricing sets of harry potter books" do
   let(:checkout) { Checkout.new }
   let(:book1) { OpenStruct.new name: 'book1', price: 8 }
+  let(:book2) { OpenStruct.new name: 'book2', price: 8 }
   let(:book4) { OpenStruct.new name: 'book4', price: 8 }
 
   it "provides no discount for a single book" do
@@ -60,5 +61,16 @@ describe "pricing sets of harry potter books" do
     checkout.scan book4
 
     expect( checkout.total ).to eq 24 * 0.90
+  end
+
+  it "discounts a set of four books by 20%" do
+    book3 = OpenStruct.new name: 'book3', price: 8
+
+    checkout.scan book1
+    checkout.scan book2
+    checkout.scan book3
+    checkout.scan book4
+
+    expect( checkout.total ).to eq 32 * 0.80
   end
 end
