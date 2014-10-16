@@ -13,6 +13,8 @@ class Checkout
                  10
                when 4
                  20
+               when 5
+                 25
                else
                  0
                end
