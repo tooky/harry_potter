@@ -32,4 +32,13 @@ describe "pricing sets of harry potter books" do
 
     expect( checkout.total ).to eq 24
   end
+
+  it "discounts a set of two books by 5%" do
+    book4 = OpenStruct.new name: 'book4', price: 8
+
+    checkout.scan book1
+    checkout.scan book4
+
+    expect( checkout.total ).to eq 16 * 0.95
+  end
 end
