@@ -2,11 +2,16 @@ require 'ostruct'
 
 class Checkout
   def scan book
-
+    books << book
   end
 
   def total
+    books.map(&:price).inject(&:+)
+  end
 
+  private
+  def books
+    @books ||= []
   end
 end
 
