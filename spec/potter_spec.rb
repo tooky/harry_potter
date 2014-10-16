@@ -6,13 +6,21 @@ class Checkout
   end
 
   def total
-    books.map(&:price).inject(&:+)
+    discount = case books.uniq.count
+               when 2
+                 5
+               else
+                 0
+               end
+
+    books.map(&:price).inject(&:+) * (100 - discount) / 100.0
   end
 
   private
   def books
     @books ||= []
   end
+
 end
 
 describe "pricing sets of harry potter books" do
