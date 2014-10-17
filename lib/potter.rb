@@ -40,6 +40,22 @@ class Checkout
       @books = books
     end
 
+    def total
+      calculate_discount(sub_total, discount)
+    end
+
+    def delta_if(price)
+      new_sub_total = sub_total + price
+      calculate_discount(new_sub_total, next_discount) - total
+    end
+
+    def << book
+      @books << book
+      self
+    end
+
+    private
+
     def discount(num_books = size)
       case num_books
       when 2
@@ -59,26 +75,12 @@ class Checkout
       map(&:price).inject(&:+)
     end
 
-    def total
-      calculate_discount(sub_total, discount)
-    end
-
     def calculate_discount(price, discount)
       price * (100 - discount) / 100.0
     end
 
     def next_discount
       discount(size + 1)
-    end
-
-    def delta_if(price)
-      new_sub_total = sub_total + price
-      calculate_discount(new_sub_total, next_discount) - total
-    end
-
-    def << book
-      @books << book
-      self
     end
 
     def each(&block)
