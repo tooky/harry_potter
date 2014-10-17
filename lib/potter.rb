@@ -7,11 +7,32 @@ class Checkout
     set_totals.inject(&:+)
   end
 
+  class Set
+    include Enumerable
+
+    def initialize *books
+      @books = books
+    end
+
+    def << book
+      @books << book
+      self
+    end
+
+    def each(&block)
+      @books.each(&block)
+    end
+
+    def size
+      @books.size
+    end
+  end
+
   def sets
     sets = []
     books.each do |book|
       if sets.all? { |s| s.include?( book ) }
-        sets << [book]
+        sets << Set.new(book)
       else
         sets.reject { |s| s.include?( book ) }.first << book
       end
