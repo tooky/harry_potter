@@ -61,7 +61,7 @@ class Checkout
   end
 
   def sets
-    old_sets
+    @sets
   end
 
   def old_sets
