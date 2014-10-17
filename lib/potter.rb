@@ -11,11 +11,7 @@ class Checkout
     include Enumerable
 
     def add_book(book)
-      begin
-        best_set_for(book) << book
-      rescue NoMethodError
-        sets << Set.new(book)
-      end
+      best_set_for(book) << book
     end
 
     def best_set_for(book)
