@@ -4,7 +4,6 @@ class Checkout
   end
 
   def scan book
-    books << book
     if @sets.all? { |s| s.include?( book ) }
       @sets << Set.new(book)
     else
@@ -62,11 +61,6 @@ class Checkout
 
   def sets
     @sets
-  end
-
-  private
-  def books
-    @books ||= []
   end
 
 end
