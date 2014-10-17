@@ -1,13 +1,9 @@
 class Checkout
-  def initialize
-    @sets = []
-  end
-
   def scan book
-    if @sets.all? { |s| s.include?( book ) }
-      @sets << Set.new(book)
+    if sets.all? { |s| s.include?( book ) }
+      sets << Set.new(book)
     else
-      @sets.reject { |s| s.include?( book ) }.first << book
+      sets.reject { |s| s.include?( book ) }.first << book
     end
   end
 
@@ -60,7 +56,7 @@ class Checkout
   end
 
   def sets
-    @sets
+    @sets ||= []
   end
 
 end
