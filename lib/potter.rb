@@ -15,7 +15,7 @@ class Checkout
     end
 
     def best_set_for(book)
-      set = sets.select { |s| s.requires?( book ) }.min { |a,b| a.delta_with(book.price) <=> b.delta_with(book.price) }
+      set = sets.select { |s| s.requires?( book ) }.min { |a,b| a.delta_with(book) <=> b.delta_with(book) }
       set || add_new_set
     end
 
@@ -48,8 +48,8 @@ class Checkout
       calculate_discount(sub_total, discount)
     end
 
-    def delta_with(price)
-      new_sub_total = sub_total + price
+    def delta_with(book)
+      new_sub_total = sub_total + book.price
       calculate_discount(new_sub_total, next_discount) - total
     end
 
