@@ -33,6 +33,9 @@ class Checkout
       map(&:price).inject(&:+)
     end
 
+    def total
+      sub_total * (100 - discount) / 100.0
+    end
 
     def << book
       @books << book
@@ -69,9 +72,7 @@ class Checkout
   end
 
   def set_totals
-    set_sub_totals.zip(set_discounts).map { |total, discount|
-      total * (100 - discount) / 100.0
-    }
+    sets.map { |set| set.total }
   end
 
   private
