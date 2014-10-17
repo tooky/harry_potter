@@ -11,10 +11,10 @@ class Checkout
     include Enumerable
 
     def add_book(book)
-      if sets.all? { |s| s.include?( book ) }
-        sets << Set.new(book)
+      if set = sets.reject { |s| s.include?( book ) }.first
+        set << book
       else
-        sets.reject { |s| s.include?( book ) }.first << book
+        sets << Set.new(book)
       end
     end
 
