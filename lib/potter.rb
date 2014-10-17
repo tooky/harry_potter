@@ -19,7 +19,7 @@ class Checkout
     end
 
     def best_set_for(book)
-      sets.reject { |s| s.include?( book ) }.first
+      sets.detect { |s| !s.include?( book ) }
     end
 
     def each(&block)
