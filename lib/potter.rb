@@ -59,8 +59,12 @@ class Checkout
       map(&:price).inject(&:+)
     end
 
-    def total(sub_total = sub_total, discount = discount)
-      sub_total * (100 - discount) / 100.0
+    def total
+      calculate_discount(sub_total, discount)
+    end
+
+    def calculate_discount(price, discount)
+      price * (100 - discount) / 100.0
     end
 
     def next_discount
@@ -68,7 +72,8 @@ class Checkout
     end
 
     def delta_if(price)
-      total(sub_total + price, next_discount) - total
+      new_sub_total = sub_total + price
+      calculate_discount(new_sub_total, next_discount) - total
     end
 
     def << book
