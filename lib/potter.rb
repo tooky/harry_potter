@@ -52,6 +52,10 @@ class Checkout
   end
 
   def sets
+    old_sets
+  end
+
+  def old_sets
     sets = []
     books.each do |book|
       if sets.all? { |s| s.include?( book ) }
