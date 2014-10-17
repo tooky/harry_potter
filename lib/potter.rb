@@ -14,6 +14,21 @@ class Checkout
       @books = books
     end
 
+    def discount
+      case size
+      when 2
+        5
+      when 3
+        10
+      when 4
+        20
+      when 5
+        25
+      else
+        0
+      end
+    end
+
     def << book
       @books << book
       self
@@ -41,20 +56,7 @@ class Checkout
   end
 
   def set_discounts
-    sets.map { |set|
-      case set.size
-      when 2
-        5
-      when 3
-        10
-      when 4
-        20
-      when 5
-        25
-      else
-        0
-      end
-    }
+    sets.map { |set| set.discount }
   end
 
   def set_sub_totals
