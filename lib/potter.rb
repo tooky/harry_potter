@@ -1,36 +1,29 @@
 class Checkout
   def scan book
-    sets.best_set_for(book) << book
+    best_set_for(book) << book
   end
 
   def total
     sets.map(&:total).inject(&:+)
   end
 
-  class SetCollection
-    include Enumerable
+  private
 
-    def best_set_for(book)
-      best_exisiting_set_for(book) || add_new_set
-    end
+  def best_set_for(book)
+    best_exisiting_set_for(book) || add_new_set
+  end
 
-    def each(&block)
-      sets.each(&block)
-    end
+  def best_exisiting_set_for(book)
+    sets.select { |s| s.requires?( book ) }
+        .min { |a,b| a.delta_with(book) <=> b.delta_with(book) }
+  end
 
-    private
-    def best_exisiting_set_for(book)
-      sets.select { |s| s.requires?( book ) }
-          .min { |a,b| a.delta_with(book) <=> b.delta_with(book) }
-    end
+  def sets
+    @sets ||= []
+  end
 
-    def sets
-      @sets ||= []
-    end
-
-    def add_new_set
-      Set.new.tap { |s| sets << s }
-    end
+  def add_new_set
+    Set.new.tap { |s| sets << s }
   end
 
   class Set
@@ -94,9 +87,4 @@ class Checkout
       @books.size
     end
   end
-
-  def sets
-    @sets ||= SetCollection.new
-  end
-
 end
