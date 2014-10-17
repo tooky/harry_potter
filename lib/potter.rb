@@ -34,7 +34,6 @@ class Checkout
   end
 
   class Set
-    include Enumerable
 
     def initialize *books
       @books = books
@@ -76,7 +75,7 @@ class Checkout
     end
 
     def sub_total
-      map(&:price).inject(&:+)
+      @books.map(&:price).inject(&:+)
     end
 
     def calculate_discount(price, discount)
