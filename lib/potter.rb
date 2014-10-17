@@ -11,8 +11,7 @@ class Checkout
     include Enumerable
 
     def best_set_for(book)
-      sets.select { |s| s.requires?( book ) }
-          .min { |a,b| a.delta_with(book) <=> b.delta_with(book) } || add_new_set
+      best_exisiting_set_for(book) || add_new_set
     end
 
     def each(&block)
@@ -20,6 +19,11 @@ class Checkout
     end
 
     private
+    def best_exisiting_set_for(book)
+      sets.select { |s| s.requires?( book ) }
+          .min { |a,b| a.delta_with(book) <=> b.delta_with(book) }
+    end
+
     def sets
       @sets ||= []
     end
