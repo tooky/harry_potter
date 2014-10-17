@@ -29,6 +29,11 @@ class Checkout
       end
     end
 
+    def sub_total
+      map(&:price).inject(&:+)
+    end
+
+
     def << book
       @books << book
       self
@@ -60,9 +65,7 @@ class Checkout
   end
 
   def set_sub_totals
-    sets.map { |set|
-      set.map(&:price).inject(&:+)
-    }
+    sets.map { |set| set.sub_total }
   end
 
   def set_totals
