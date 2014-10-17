@@ -1,14 +1,31 @@
 class Checkout
   def scan book
-    if sets.all? { |s| s.include?( book ) }
-      sets << Set.new(book)
-    else
-      sets.reject { |s| s.include?( book ) }.first << book
-    end
+    sets.add_book book
   end
 
   def total
     sets.map(&:total).inject(&:+)
+  end
+
+  class SetCollection
+    include Enumerable
+
+    def add_book(book)
+      if sets.all? { |s| s.include?( book ) }
+        sets << Set.new(book)
+      else
+        sets.reject { |s| s.include?( book ) }.first << book
+      end
+    end
+
+    def each(&block)
+      sets.each(&block)
+    end
+
+    private
+    def sets
+      @sets ||= []
+    end
   end
 
   class Set
@@ -56,7 +73,7 @@ class Checkout
   end
 
   def sets
-    @sets ||= []
+    @sets ||= SetCollection.new
   end
 
 end
