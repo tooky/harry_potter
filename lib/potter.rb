@@ -11,11 +11,15 @@ class Checkout
     include Enumerable
 
     def add_book(book)
-      if set = sets.reject { |s| s.include?( book ) }.first
-        set << book
-      else
+      begin
+        best_set_for(book) << book
+      rescue NoMethodError
         sets << Set.new(book)
       end
+    end
+
+    def best_set_for(book)
+      sets.reject { |s| s.include?( book ) }.first
     end
 
     def each(&block)
