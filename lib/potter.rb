@@ -27,6 +27,12 @@ class Checkout
   end
 
   class Set
+    DISCOUNTS = {
+      2 => 5,
+      3 => 10,
+      4 => 20,
+      5 => 25,
+    }
 
     def initialize *books
       @books = books
@@ -53,18 +59,7 @@ class Checkout
     private
 
     def discount(num_books = size)
-      case num_books
-      when 2
-        5
-      when 3
-        10
-      when 4
-        20
-      when 5
-        25
-      else
-        0
-      end
+      DISCOUNTS.fetch(num_books) { 0 }
     end
 
     def sub_total
