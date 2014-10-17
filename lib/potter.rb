@@ -1,6 +1,6 @@
 class Checkout
   def scan book
-    sets.add_book book
+    sets.best_set_for(book) << book
   end
 
   def total
@@ -10,14 +10,9 @@ class Checkout
   class SetCollection
     include Enumerable
 
-    def add_book(book)
-      best_set_for(book) << book
-    end
-
     def best_set_for(book)
-      set = sets.select { |s| s.requires?( book ) }
-                .min { |a,b| a.delta_with(book) <=> b.delta_with(book) }
-      set || add_new_set
+      sets.select { |s| s.requires?( book ) }
+          .min { |a,b| a.delta_with(book) <=> b.delta_with(book) } || add_new_set
     end
 
     def each(&block)
