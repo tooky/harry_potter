@@ -95,4 +95,18 @@ describe "pricing sets of harry potter books" do
 
     expect( checkout.total ).to eq 8 + 16 * 0.95
   end
+
+  it "handles finding the best discount" do
+    skip
+    checkout.scan book1
+    checkout.scan book1
+    checkout.scan book2
+    checkout.scan book2
+    checkout.scan book3
+    checkout.scan book3
+    checkout.scan book4
+    checkout.scan book5
+
+    expect( checkout.total ).to eq( 32 * 0.8 + 32 * 0.8 )
+  end
 end
