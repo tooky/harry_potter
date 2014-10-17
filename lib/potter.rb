@@ -4,7 +4,7 @@ class Checkout
   end
 
   def total
-    set_totals.inject(&:+)
+    sets.map(&:total).inject(&:+)
   end
 
   class Set
@@ -61,18 +61,6 @@ class Checkout
       end
     end
     sets
-  end
-
-  def set_discounts
-    sets.map { |set| set.discount }
-  end
-
-  def set_sub_totals
-    sets.map { |set| set.sub_total }
-  end
-
-  def set_totals
-    sets.map { |set| set.total }
   end
 
   private
