@@ -39,8 +39,8 @@ class Checkout
       @books = books
     end
 
-    def discount
-      case size
+    def discount(num_books = size)
+      case num_books
       when 2
         5
       when 3
