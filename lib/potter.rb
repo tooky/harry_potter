@@ -15,7 +15,8 @@ class Checkout
     end
 
     def best_set_for(book)
-      sets.detect { |s| !s.include?( book ) } || add_new_set
+      set = sets.select { |s| !s.include?( book ) }.min { |a,b| a.delta_if(book.price) <=> b.delta_if(book.price) }
+      set || add_new_set
     end
 
     def each(&block)
@@ -58,8 +59,16 @@ class Checkout
       map(&:price).inject(&:+)
     end
 
-    def total
+    def total(sub_total = sub_total, discount = discount)
       sub_total * (100 - discount) / 100.0
+    end
+
+    def next_discount
+      discount(size + 1)
+    end
+
+    def delta_if(price)
+      total(sub_total + price, next_discount) - total
     end
 
     def << book
