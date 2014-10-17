@@ -15,7 +15,7 @@ class Checkout
     end
 
     def best_set_for(book)
-      set = sets.select { |s| !s.include?( book ) }.min { |a,b| a.delta_if(book.price) <=> b.delta_if(book.price) }
+      set = sets.select { |s| s.requires?( book ) }.min { |a,b| a.delta_if(book.price) <=> b.delta_if(book.price) }
       set || add_new_set
     end
 
@@ -38,6 +38,10 @@ class Checkout
 
     def initialize *books
       @books = books
+    end
+
+    def requires?(book)
+      !@books.include?(book)
     end
 
     def total
