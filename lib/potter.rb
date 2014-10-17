@@ -23,10 +23,10 @@ class Checkout
   end
 
   def add_new_set
-    Set.new.tap { |s| sets << s }
+    BookSet.new.tap { |s| sets << s }
   end
 
-  class Set
+  class BookSet
     DISCOUNTS = {
       2 => 5,
       3 => 10,
