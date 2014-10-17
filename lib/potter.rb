@@ -5,6 +5,11 @@ class Checkout
 
   def scan book
     books << book
+    if @sets.all? { |s| s.include?( book ) }
+      @sets << Set.new(book)
+    else
+      @sets.reject { |s| s.include?( book ) }.first << book
+    end
   end
 
   def total
