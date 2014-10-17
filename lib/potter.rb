@@ -1,4 +1,8 @@
 class Checkout
+  def initialize
+    @sets = []
+  end
+
   def scan book
     books << book
   end
