@@ -1,33 +1,5 @@
 require 'ostruct'
-
-class Checkout
-  def scan book
-    books << book
-  end
-
-  def total
-    discount = case books.uniq.count
-               when 2
-                 5
-               when 3
-                 10
-               when 4
-                 20
-               when 5
-                 25
-               else
-                 0
-               end
-
-    books.map(&:price).inject(&:+) * (100 - discount) / 100.0
-  end
-
-  private
-  def books
-    @books ||= []
-  end
-
-end
+require 'potter'
 
 describe "pricing sets of harry potter books" do
   let(:checkout) { Checkout.new }
