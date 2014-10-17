@@ -64,18 +64,6 @@ class Checkout
     @sets
   end
 
-  def old_sets
-    sets = []
-    books.each do |book|
-      if sets.all? { |s| s.include?( book ) }
-        sets << Set.new(book)
-      else
-        sets.reject { |s| s.include?( book ) }.first << book
-      end
-    end
-    sets
-  end
-
   private
   def books
     @books ||= []
