@@ -15,7 +15,7 @@ class Checkout
     end
 
     def best_set_for(book)
-      sets.detect { |s| !s.include?( book ) } || Set.new.tap { |s| sets << s }
+      sets.detect { |s| !s.include?( book ) } || add_new_set
     end
 
     def each(&block)
@@ -25,6 +25,10 @@ class Checkout
     private
     def sets
       @sets ||= []
+    end
+
+    def add_new_set
+      Set.new.tap { |s| sets << s }
     end
   end
 
