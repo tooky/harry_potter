@@ -69,7 +69,6 @@ describe "pricing sets of harry potter books" do
   end
 
   it "handles finding the best discount" do
-    skip
     checkout.scan book1
     checkout.scan book1
     checkout.scan book2
